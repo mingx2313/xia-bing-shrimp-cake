@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-MY" class="scroll-smooth scroll-pt-24">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亚明叔手工虾饼 | 开罐即食，咔滋停不下来！</title>
+    
+    <!-- Google Fonts: Noto Serif SC for traditional Nanyang vibe, Noto Sans SC for modern readability -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Iconify for Icons -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans:['"Noto Sans SC"', 'sans-serif'],
+                        serif: ['"Noto Serif SC"', 'serif'],
+                    },
+                    colors: {
+                        nanyang: {
+                            red: '#9E2A2B',    // Traditional festive red
+                            darkred: '#540B0E',
+                            gold: '#E09F3E',   // Fried golden brown
+                            light: '#FFF3E0',  // Warm beige/paper
+                            dark: '#335C67',   // Retro Nanyang Green/Blue
+                            wood: '#2A1B14',
+                            paper: '#F4EBD9'
+                        }
+                    },
+                    animation: {
+                        'spin-slow': 'spin 15s linear infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'whatsapp-pulse': 'whatsapp-pulse 2s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: 1, boxShadow: '0 0 15px rgba(224, 159, 62, 0.5)' },
+                            '50%': { opacity: .8, boxShadow: '0 0 30px rgba(224, 159, 62, 0.9)' },
+                        },
+                        'whatsapp-pulse': {
+                            '0%': { boxShadow: '0 0 0 0 rgba(37, 211, 102, 0.7)' },
+                            '70%': { boxShadow: '0 0 0 15px rgba(37, 211, 102, 0)' },
+                            '100%': { boxShadow: '0 0 0 0 rgba(37, 211, 102, 0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Global Noise Texture Layer */
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: rgba(255, 243, 224, 0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(224, 159, 62, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(255, 243, 224, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(224, 159, 62, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            transform: skewX(-20deg);
+            transition: all 0.6s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(224, 159, 62, 0.8);
+            box-shadow: 0 20px 40px rgba(224, 159, 62, 0.2);
+        }
+
+        .glass-card:hover::before {
+            left: 150%;
+        }
+
+        /* Accordion Customization */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #1A110D; }
+        ::-webkit-scrollbar-thumb { background: #9E2A2B; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #E09F3E; }
+        
+        ::selection { background: #E09F3E; color: #fff; }
+    </style>
+</head>
+<body class="font-sans bg-nanyang-wood text-nanyang-light antialiased relative selection:bg-nanyang-gold selection:text-white">
+
+    <!-- Global Noise Texture -->
+    <div class="noise-overlay"></div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/60123456789?text=Hi%20亚明叔，我想下单手工虾饼！" target="_blank" class="fixed bottom-6 right-6 z-[100] w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center shadow-xl transform hover:scale-110 transition-transform animate-whatsapp-pulse group">
+        <iconify-icon icon="ic:baseline-whatsapp" class="text-4xl text-white"></iconify-icon>
+        <div class="absolute -left-36 top-1/2 -translate-y-1/2 bg-white text-gray-800 text-sm font-bold px-3 py-1.5 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            有疑问？点我下单！
+            <div class="absolute right-[-4px] top-1/2 -translate-y-1/2 w-2 h-2 bg-white transform rotate-45"></div>
+        </div>
+    </a>
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-nanyang-darkred/90 backdrop-blur-md border-b border-nanyang-gold/20 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 md:h-24">
+                <!-- Logo -->
+                <a href="#" class="flex-shrink-0 flex items-center gap-3 cursor-pointer group">
+                    <iconify-icon icon="fluent-emoji:shrimp" class="text-4xl md:text-5xl drop-shadow-md group-hover:scale-110 transition-transform"></iconify-icon>
+                    <div class="flex flex-col">
+                        <span class="font-serif font-black text-2xl md:text-3xl tracking-widest text-nanyang-gold drop-shadow-md leading-none">亚明叔虾饼</span>
+                        <span class="text-[10px] tracking-[0.1em] text-nanyang-light/70 uppercase mt-1">Ready-to-Eat · Penang</span>
+                    </div>
+                </a>
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex space-x-6 xl:space-x-8 items-center">
+                    <a href="#story" class="text-nanyang-light hover:text-nanyang-gold transition font-medium text-lg">老字号故事</a>
+                    <a href="#features" class="text-nanyang-light hover:text-nanyang-gold transition font-medium text-lg">真材实料</a>
+                    <a href="#guide" class="text-nanyang-light hover:text-nanyang-gold transition font-medium text-lg">品尝秘诀</a>
+                    <a href="#reviews" class="text-nanyang-light hover:text-nanyang-gold transition font-medium text-lg">安娣好评</a>
+                    <a href="#cta" class="bg-gradient-to-r from-nanyang-gold to-yellow-500 text-nanyang-darkred font-black px-8 py-3 rounded-full shadow-[0_0_15px_rgba(224,159,62,0.4)] hover:shadow-[0_0_25px_rgba(224,159,62,0.8)] transition transform hover:scale-105 flex items-center gap-2">
+                        <iconify-icon icon="mdi:cart-arrow-down" class="text-xl"></iconify-icon>
+                        马上抢购
+                    </a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button class="text-nanyang-gold hover:text-yellow-300 focus:outline-none">
+                        <iconify-icon icon="mingcute:menu-fill" class="text-4xl"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1627308594199-7601ce758245?auto=format&fit=crop&q=80&w=2000" alt="Delicious ready-to-eat prawn crackers" class="w-full h-full object-cover object-center filter brightness-[0.35] contrast-125 sepia-[0.3]" />
+            <div class="absolute inset-0 bg-gradient-to-t from-nanyang-wood via-transparent to-nanyang-darkred/60"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between w-full pb-20 lg:pb-0">
+            
+            <!-- Hero Content -->
+            <div class="lg:w-3/5 text-left mb-12 lg:mb-0 pt-10 lg:pt-0">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-nanyang-gold/50 bg-nanyang-gold/10 backdrop-blur-sm mb-6">
+                    <iconify-icon icon="twemoji:fire" class="text-xl"></iconify-icon>
+                    <span class="text-nanyang-gold font-bold tracking-wider text-sm md:text-base">大马华人三代传承 · 100%鲜炸即食虾饼</span>
+                </div>
+                <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-6 drop-shadow-2xl">
+                    开罐就是阿嬷炸的<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-nanyang-gold via-yellow-300 to-nanyang-gold animate-pulse">每一口都「咔滋」响！</span>
+                </h1>
+                <p class="text-lg md:text-2xl text-gray-200 mb-10 max-w-2xl font-light leading-relaxed drop-shadow-md">
+                    每日新鲜油锅，专业控温鲜炸！让你告别厨房油烟，打开罐子就能马上吃到最松脆、最够虾味的古早味虾饼。逢年过节、煲剧聊天的最强零嘴！
+                </p>
+                <div class="flex flex-col sm:flex-row gap-5">
+                    <a href="#cta" class="inline-flex justify-center items-center gap-2 bg-gradient-to-r from-nanyang-red to-nanyang-darkred text-white font-bold text-xl px-8 py-4 rounded-full shadow-[0_0_20px_rgba(158,42,43,0.6)] hover:shadow-[0_0_30px_rgba(224,159,62,0.8)] transition-all transform hover:-translate-y-1 border border-nanyang-gold/30">
+                        <iconify-icon icon="mdi:cart-shopping" class="text-2xl"></iconify-icon>
+                        买两罐全马包邮
+                    </a>
+                    <a href="#guide" class="inline-flex justify-center items-center gap-2 bg-white/5 hover:bg-white/15 backdrop-blur-md text-nanyang-gold font-medium text-lg px-8 py-4 rounded-full border border-nanyang-gold/30 transition-all hover:text-yellow-300">
+                        <iconify-icon icon="mdi:lightbulb-on-outline" class="text-2xl"></iconify-icon>
+                        解锁神仙吃法
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Image Decor -->
+            <div class="lg:w-2/5 flex justify-center relative mt-10 lg:mt-0">
+                <div class="absolute inset-0 bg-nanyang-gold/20 blur-[120px] rounded-full w-72 h-72 m-auto"></div>
+                <div class="relative w-80 h-80 md:w-96 md:h-96 animate-float">
+                    <img src="https://i.ibb.co/C0W2hBG/prawn-crackers-can-no-bg.png" alt="亞明叔鮮炸蝦餅罐裝" class="w-full h-full object-contain drop-shadow-2xl">
+                     <!-- Floating local element -->
+                    <div class="absolute -bottom-4 -right-4 bg-white text-nanyang-darkred font-black px-4 py-2 rounded-lg transform rotate-12 shadow-xl border-2 border-nanyang-gold text-sm md:text-base animate-bounce">
+                        Walao, 够力脆！🔥
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-10 pointer-events-none">
+            <svg class="relative block w-full h-[60px] md:h-[120px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,115.1,188.76,104.2,235.27,95.53,279.7,78.5,321.39,56.44Z" class="fill-nanyang-wood"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Brand Story Section -->
+    <section id="story" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <!-- Image Side -->
+                <div class="lg:w-1/2 relative">
+                    <div class="absolute inset-0 bg-nanyang-gold transform -rotate-3 rounded-2xl opacity-20"></div>
+                    <div class="relative glass-panel p-3 rounded-2xl transform rotate-2 hover:rotate-0 transition-transform duration-500">
+                        <img src="https://images.unsplash.com/photo-1542845628-971c0800bbf3?auto=format&fit=crop&w=800&q=80" alt="Old Traditional Asian Shop" class="rounded-xl w-full h-[400px] object-cover filter sepia-[0.4] contrast-110">
+                        <div class="absolute -bottom-6 -left-6 bg-nanyang-red text-white p-6 rounded-full w-32 h-32 flex flex-col items-center justify-center border-4 border-nanyang-wood shadow-2xl">
+                            <span class="font-serif text-3xl font-black">50年</span>
+                            <span class="text-sm tracking-widest font-bold">老字号</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Text Side -->
+                <div class="lg:w-1/2">
+                    <h4 class="text-nanyang-gold font-bold tracking-widest uppercase mb-2 flex items-center gap-2">
+                        <iconify-icon icon="mdi:book-open-page-variant"></iconify-icon> 我们的故事
+                    </h4>
+                    <h2 class="font-serif text-4xl md:text-5xl font-black text-white mb-6 leading-snug">
+                        “外面卖的都是粉，<br>自己吃的，必须是虾。”
+                    </h2>
+                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                        1974年，亚明叔在槟城北海的渔村推着小推车卖杂货。因为不忍心看到村里的孩子吃充满味精的零食，他决定用每天渔船刚打捞上来的新鲜海虾，混合祖传秘方，亲手打成泥、压片、在热带的烈日下曝晒成虾饼干。
+                    </p>
+                    <p class="text-gray-300 text-lg leading-relaxed mb-8">
+                        经历了三代人，很多东西变了，但亚明叔的规矩没变：<strong class="text-nanyang-gold font-bold">虾肉比例绝对不能少过60%，绝不加一滴防腐剂！</strong> 这份坚持，成就了这罐开罐即食、满口鲜香的古早味虾饼。
+                    </p>
+                    
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-1 bg-nanyang-gold rounded-full"></div>
+                        <span class="font-serif text-xl text-nanyang-light italic">三代传承，匠心手作</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition Section (Glassmorphism Cards) -->
+    <section id="features" class="relative py-24 bg-[#221510] border-y border-nanyang-gold/10">
+        <div class="absolute inset-0 opacity-[0.02]" style="background-image: radial-gradient(#E09F3E 2px, transparent 2px); background-size: 30px 30px;"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-4xl md:text-5xl font-black text-white mb-4">为什么安哥安娣都抢着买？</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-nanyang-red to-nanyang-gold mx-auto mb-6 rounded-full"></div>
+                <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">不是随便炸炸，这罐虾饼里藏着对大马古早味最固执的坚持。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+                <!-- Card 1 -->
+                <div class="glass-card rounded-2xl p-10 flex flex-col items-center text-center group">
+                    <div class="w-24 h-24 rounded-full bg-nanyang-darkred/50 border-2 border-nanyang-gold/50 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-[0_0_20px_rgba(224,159,62,0.2)] group-hover:shadow-[0_0_30px_rgba(224,159,62,0.6)]">
+                        <iconify-icon icon="ph:fish-simple-bold" class="text-5xl text-nanyang-gold"></iconify-icon>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-nanyang-light mb-4">60%超高鲜虾含量</h3>
+                    <p class="text-gray-300 leading-relaxed font-light text-lg">
+                        坚持使用每日凌晨现捕海虾，手工去壳打泥。面粉只是配角，吃进嘴里满是浓郁的海洋鲜甜，真材实料骗不了舌头。
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card rounded-2xl p-10 flex flex-col items-center text-center group md:-translate-y-4">
+                    <div class="w-24 h-24 rounded-full bg-nanyang-darkred/50 border-2 border-nanyang-gold/50 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-[0_0_20px_rgba(224,159,62,0.2)] group-hover:shadow-[0_0_30px_rgba(224,159,62,0.6)]">
+                        <iconify-icon icon="mdi:pot-steam" class="text-6xl text-nanyang-gold"></iconify-icon>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-nanyang-light mb-4">专业控油 酥脆不腻</h3>
+                    <p class="text-gray-300 leading-relaxed font-light text-lg">
+                        拒绝重复用油！我们坚持每日更换新鲜食用油，并以老师傅的经验精准控温，确保每一片虾饼都金黄酥脆，吃多也不油腻。
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card rounded-2xl p-10 flex flex-col items-center text-center group">
+                    <div class="w-24 h-24 rounded-full bg-nanyang-darkred/50 border-2 border-nanyang-gold/50 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-[0_0_20px_rgba(224,159,62,0.2)] group-hover:shadow-[0_0_30px_rgba(224,159,62,0.6)]">
+                        <iconify-icon icon="fluent-emoji-flat:leaf-fluttering-in-wind" class="text-5xl text-nanyang-gold"></iconify-icon>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-nanyang-light mb-4">零添加 全家安心吃</h3>
+                    <p class="text-gray-300 leading-relaxed font-light text-lg">
+                        祖传秘方调味，绝不添加味精、防腐剂或人工色素。保留最原始的虾香，大人小孩狂吃不怕口渴，健康又解馋。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tasting Guide Section -->
+    <section id="guide" class="py-24 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row-reverse items-center gap-16">
+                
+                <div class="lg:w-1/2">
+                    <h4 class="text-nanyang-gold font-bold tracking-widest uppercase mb-2">TASTING GUIDE</h4>
+                    <h2 class="font-serif text-4xl md:text-5xl font-black text-white mb-8">解锁虾饼的<br>3 种神仙吃法！</h2>
+                    
+                    <div class="space-y-8">
+                        <!-- Tip 1 -->
+                        <div class="flex gap-6 items-start group">
+                            <div class="flex-shrink-0 w-16 h-16 rounded-full bg-nanyang-darkred border-2 border-nanyang-gold flex items-center justify-center font-serif text-3xl font-black text-nanyang-gold group-hover:bg-nanyang-gold group-hover:text-nanyang-darkred transition-colors">1</div>
+                            <div>
+                                <h4 class="text-2xl font-bold text-white mb-2">原味最经典</h4>
+                                <p class="text-gray-400 text-lg">直接开罐，享受最纯粹的满口虾味和“咔滋”声。这才是对老师傅手艺最大的尊重！</p>
+                            </div>
+                        </div>
+                        <!-- Tip 2 -->
+                        <div class="flex gap-6 items-start group">
+                            <div class="flex-shrink-0 w-16 h-16 rounded-full bg-nanyang-darkred border-2 border-nanyang-gold flex items-center justify-center font-serif text-3xl font-black text-nanyang-gold group-hover:bg-nanyang-gold group-hover:text-nanyang-darkred transition-colors">2</div>
+                            <div>
+                                <h4 class="text-2xl font-bold text-white mb-2">蘸点辣椒酱</h4>
+                                <p class="text-gray-400 text-lg">配上你最爱的泰式甜辣酱或 Sambal Belacan，酸甜香辣，口感层次瞬间原地起飞！</p>
+                            </div>
+                        </div>
+                        <!-- Tip 3 -->
+                        <div class="flex gap-6 items-start group">
+                            <div class="flex-shrink-0 w-16 h-16 rounded-full bg-nanyang-darkred border-2 border-nanyang-gold flex items-center justify-center font-serif text-3xl font-black text-nanyang-gold group-hover:bg-nanyang-gold group-hover:text-nanyang-darkred transition-colors">3</div>
+                            <div>
+                                <h4 class="text-2xl font-bold text-white mb-2">配冰镇凉茶</h4>
+                                <p class="text-gray-400 text-lg">一口虾饼，一口冰凉的饮料或啤酒，看戏煲剧，简直是人间天堂，爽到没朋友！</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Visualizer -->
+                <div class="lg:w-1/2 relative w-full aspect-square">
+                    <div class="absolute inset-0 bg-nanyang-gold/20 rounded-[2rem] transform -rotate-3 scale-105"></div>
+                    <div class="absolute inset-0 bg-nanyang-red rounded-[2rem] overflow-hidden border-4 border-nanyang-gold shadow-2xl flex items-center justify-center">
+                        <img src="https://images.unsplash.com/photo-1576383609839-a7898b1b5a5b?auto=format&fit=crop&w=800&q=80" alt="Snacks with chili sauce and drinks" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-700">
+                    </div>
+                    
+                    <!-- Floating Tag -->
+                    <div class="absolute -bottom-6 right-10 bg-nanyang-wood px-6 py-3 rounded-xl border border-nanyang-gold shadow-xl flex items-center gap-3">
+                        <iconify-icon icon="fluent-emoji:beer-mug" class="text-3xl"></iconify-icon>
+                        <span class="font-bold text-white">配啤酒最Ngam！</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof / Reviews Section -->
+    <section id="reviews" class="py-24 bg-nanyang-dark relative overflow-hidden border-y border-nanyang-gold/20">
+        <iconify-icon icon="bi:quote" class="absolute top-10 left-10 text-[15rem] text-white/5 pointer-events-none"></iconify-icon>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="font-serif text-4xl md:text-5xl font-black text-center text-white mb-4">全马街坊 够力好评！</h2>
+            <p class="text-center text-nanyang-gold text-lg mb-16">不怕不好吃，只怕你吃一口就停不下来</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Review 1 -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-sm hover:bg-white/10 transition-colors">
+                    <div class="flex text-yellow-400 mb-4 text-xl">★★★★★</div>
+                    <p class="text-gray-200 text-lg italic mb-6 leading-relaxed">"Walao eh！这个虾饼真的是小时候的味道！过年摆在桌上，亲戚一下子就扫光光，明年要定多几罐才行！不用自己炸就是爽！"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-nanyang-gold/30 rounded-full flex items-center justify-center font-bold text-nanyang-gold text-xl">W</div>
+                        <div><p class="text-white font-bold">Auntie Wong</p><p class="text-nanyang-gold text-sm">Petaling Jaya, Selangor</p></div>
+                    </div>
+                </div>
+                
+                <!-- Review 2 -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-sm hover:bg-white/10 transition-colors transform lg:-translate-y-4">
+                    <div class="flex text-yellow-400 mb-4 text-xl">★★★★★</div>
+                    <p class="text-gray-200 text-lg italic mb-6 leading-relaxed">"我老婆平时很挑嘴，嫌外面的虾饼都是粉味。结果吃亚明叔的，一边看 Netflix 一边咔滋咔滋，一个人干掉半罐！虾味真的很浓，赞！"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-nanyang-gold/30 rounded-full flex items-center justify-center font-bold text-nanyang-gold text-xl">J</div>
+                        <div><p class="text-white font-bold">Jason Lim</p><p class="text-nanyang-gold text-sm">Georgetown, Penang</p></div>
+                    </div>
+                </div>
+                
+                <!-- Review 3 -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-sm hover:bg-white/10 transition-colors">
+                    <div class="flex text-yellow-400 mb-4 text-xl">★★★★★</div>
+                    <p class="text-gray-200 text-lg italic mb-6 leading-relaxed">"最怕吃到油耗味重的虾饼，亚明叔的完全不会！很干爽，吃完嘴巴不会油油的，证明油很干净。吃完嘴巴也不会干干的，没有放味精。"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-nanyang-gold/30 rounded-full flex items-center justify-center font-bold text-nanyang-gold text-xl">芬</div>
+                        <div><p class="text-white font-bold">晓芬 (Xiao Fen)</p><p class="text-nanyang-gold text-sm">Johor Bahru, Johor</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 bg-nanyang-wood relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="font-serif text-3xl md:text-5xl font-black text-center text-white mb-12">常见问题 (FAQ)</h2>
+            <div class="space-y-4">
+                <details class="group bg-white/5 border border-white/10 rounded-xl overflow-hidden cursor-pointer backdrop-blur-sm transition-all hover:bg-white/10">
+                    <summary class="flex justify-between items-center font-bold text-xl text-white p-6 outline-none">
+                        你们的虾饼会很油腻吗？
+                        <iconify-icon icon="mdi:chevron-down" class="text-2xl text-nanyang-gold transition-transform group-open:rotate-180"></iconify-icon>
+                    </summary>
+                    <div class="p-6 pt-0 text-gray-300 text-lg leading-relaxed border-t border-white/10 mt-2">
+                        完全不会！我们坚持每日换新油，并采用专业的商用油炸锅精准控温，能瞬间锁住酥脆，同时逼出多余油份。出锅后还会进行二次吸油处理，保证您吃到的是<strong class="text-nanyang-gold">“咔滋脆，不油腻”</strong>的口感。
+                    </div>
+                </details>
+                <details class="group bg-white/5 border border-white/10 rounded-xl overflow-hidden cursor-pointer backdrop-blur-sm transition-all hover:bg-white/10">
+                    <summary class="flex justify-between items-center font-bold text-xl text-white p-6 outline-none">
+                        没有防腐剂，可以耐多久？
+                        <iconify-icon icon="mdi:chevron-down" class="text-2xl text-nanyang-gold transition-transform group-open:rotate-180"></iconify-icon>
+                    </summary>
+                    <div class="p-6 pt-0 text-gray-300 text-lg leading-relaxed border-t border-white/10 mt-2">
+                        我们的虾饼炸好后会立刻密封包装。在<strong class="text-white">未开封</strong>的情况下，可以保存长达 3 个月。开封后，为保证最佳口感，建议在 2 周内吃完，并且每次吃完后务必把盖子<strong class="text-nanyang-gold">盖紧盖严</strong>，防止漏风变软哦！
+                    </div>
+                </details>
+                <details class="group bg-white/5 border border-white/10 rounded-xl overflow-hidden cursor-pointer backdrop-blur-sm transition-all hover:bg-white/10">
+                    <summary class="flex justify-between items-center font-bold text-xl text-white p-6 outline-none">
+                        发货快吗？东马有寄吗？
+                        <iconify-icon icon="mdi:chevron-down" class="text-2xl text-nanyang-gold transition-transform group-open:rotate-180"></iconify-icon>
+                    </summary>
+                    <div class="p-6 pt-0 text-gray-300 text-lg leading-relaxed border-t border-white/10 mt-2">
+                        现货下单后，我们会在 24-48 小时内打包发货！西马一般 2-3 天就能送到您府上。<br>
+                        <strong class="text-nanyang-gold">东马 (Sabah/Sarawak) 也有寄！</strong> 不过邮费会稍有不同，下单时系统会自动计算。
+                    </div>
+                </details>
+                <details class="group bg-white/5 border border-white/10 rounded-xl overflow-hidden cursor-pointer backdrop-blur-sm transition-all hover:bg-white/10">
+                    <summary class="flex justify-between items-center font-bold text-xl text-white p-6 outline-none">
+                        穆斯林可以吃吗？(Is it Halal?)
+                        <iconify-icon icon="mdi:chevron-down" class="text-2xl text-nanyang-gold transition-transform group-open:rotate-180"></iconify-icon>
+                    </summary>
+                    <div class="p-6 pt-0 text-gray-300 text-lg leading-relaxed border-t border-white/10 mt-2">
+                        我们的原料只有纯海虾、木薯粉、盐和糖，制作环境和厨具也绝对不含猪肉、猪油或酒精（Pork-free / Lard-free）。很多马来同胞顾客也是我们的长期支持者哦！
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section id="cta" class="relative py-28 bg-nanyang-red overflow-hidden flex items-center justify-center">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(224,159,62,0.4)_0%,transparent_70%)]"></div>
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="relative z-10 text-center max-w-4xl mx-auto px-4 w-full">
+            <iconify-icon icon="fluent-emoji:firecracker" class="text-7xl md:text-9xl mb-6 drop-shadow-2xl animate-bounce"></iconify-icon>
+            <h2 class="font-serif text-5xl md:text-7xl font-black text-white mb-6 drop-shadow-lg leading-tight">
+                不要走宝啦！<br>
+                <span class="text-nanyang-gold">新鲜出炉 现货有限！</span>
+            </h2>
+            <p class="text-xl md:text-2xl text-white/90 mb-10 font-light drop-shadow leading-relaxed max-w-3xl mx-auto">
+                为保证新鲜，我们坚持小批量制作。今天下单，<br class="hidden md:block">
+                <strong class="text-yellow-300 font-bold bg-nanyang-darkred/50 px-4 py-1 rounded-lg">买满 2 罐即享【西马包邮】送到你家门口！</strong>
+            </p>
+            <div class="bg-white/10 backdrop-blur-xl border-2 border-nanyang-gold/50 p-8 md:p-10 rounded-[2rem] shadow-2xl inline-block w-full max-w-lg mx-auto transform hover:scale-105 transition-transform duration-500">
+                <div class="inline-block bg-nanyang-gold text-nanyang-darkred font-black px-4 py-1 rounded-full text-sm tracking-wider mb-4">BEST SELLER</div>
+                <div class="text-white font-serif font-bold text-3xl mb-2 drop-shadow">招牌古早味鲜炸虾饼</div>
+                <div class="flex items-end justify-center gap-3 mb-8 text-white mt-4">
+                    <span class="text-6xl font-black text-yellow-300 drop-shadow-md">RM 22</span>
+                    <span class="text-2xl opacity-60 line-through pb-1">RM 28</span>
+                    <span class="text-xl pb-2">/ 罐 (净重 250g)</span>
+                </div>
+                <button class="w-full bg-gradient-to-b from-yellow-300 via-nanyang-gold to-yellow-500 hover:from-yellow-200 hover:to-yellow-400 text-nanyang-darkred font-black text-2xl md:text-3xl py-5 rounded-2xl shadow-[0_10px_25px_rgba(224,159,62,0.5)] hover:shadow-[0_15px_35px_rgba(224,159,62,0.8)] transition-all animate-pulse-glow flex justify-center items-center gap-3 border-b-4 border-yellow-600 active:border-b-0 active:translate-y-1">
+                    <iconify-icon icon="ic:round-shopping-cart"></iconify-icon>
+                    马上抢购 (Add to Cart)
+                </button>
+                <div class="flex flex-wrap items-center justify-center gap-4 mt-6 text-sm text-white/80">
+                    <span class="flex items-center gap-1"><iconify-icon icon="mdi:truck-fast" class="text-nanyang-gold text-xl"></iconify-icon> 西马包邮 (Min. 2)</span>
+                    <span class="flex items-center gap-1"><iconify-icon icon="mdi:shield-check" class="text-nanyang-gold text-xl"></iconify-icon> 气泡柱防碎包装</span>
+                    <span class="flex items-center gap-1"><iconify-icon icon="logos:touchngo" class="text-xl"></iconify-icon> 支持 TNG / FPX</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#110A07] pt-20 pb-10 border-t border-nanyang-gold/20 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+                <!-- Brand Info -->
+                <div class="lg:col-span-2 flex flex-col items-start pr-0 lg:pr-12">
+                    <div class="flex items-center gap-3 mb-6">
+                        <iconify-icon icon="fluent-emoji:shrimp" class="text-4xl"></iconify-icon>
+                        <span class="font-serif font-black text-2xl tracking-widest text-nanyang-gold">亚明叔手工虾饼</span>
+                    </div>
+                    <p class="text-gray-400 text-base leading-relaxed mb-8">
+                        传承自1974年的北海古早味。我们坚持用最好的新鲜海虾，最古老的日晒手艺，拒绝化学添加。只想把那份咔滋咔滋的快乐，传递给每一个大马家庭。
+                    </p>
+                    <div class="flex space-x-5">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-nanyang-gold hover:text-nanyang-darkred hover:border-nanyang-gold transition-all text-xl"><iconify-icon icon="mdi:facebook"></iconify-icon></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-nanyang-gold hover:text-nanyang-darkred hover:border-nanyang-gold transition-all text-xl"><iconify-icon icon="mdi:instagram"></iconify-icon></a>
+                        <a href="https://wa.me/60123456789?text=Hi%20亚明叔，我想下单手工虾饼！" target="_blank" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-nanyang-gold hover:text-nanyang-darkred hover:border-nanyang-gold transition-all text-xl"><iconify-icon icon="ic:baseline-whatsapp"></iconify-icon></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-nanyang-gold hover:text-nanyang-darkred hover:border-nanyang-gold transition-all text-xl"><iconify-icon icon="simple-icons:tiktok"></iconify-icon></a>
+                    </div>
+                </div>
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-nanyang-light font-bold text-xl mb-6 font-serif border-b border-nanyang-gold/20 pb-2 inline-block">快速链接</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#story" class="text-gray-400 hover:text-nanyang-gold transition flex items-center gap-2"><iconify-icon icon="mdi:chevron-right" class="text-nanyang-gold"></iconify-icon> 关于亚明叔</a></li>
+                        <li><a href="#features" class="text-gray-400 hover:text-nanyang-gold transition flex items-center gap-2"><iconify-icon icon="mdi:chevron-right" class="text-nanyang-gold"></iconify-icon> 我们的坚持</a></li>
+                        <li><a href="#guide" class="text-gray-400 hover:text-nanyang-gold transition flex items-center gap-2"><iconify-icon icon="mdi:chevron-right" class="text-nanyang-gold"></iconify-icon> 品尝秘诀</a></li>
+                        <li><a href="#faq" class="text-gray-400 hover:text-nanyang-gold transition flex items-center gap-2"><iconify-icon icon="mdi:chevron-right" class="text-nanyang-gold"></iconify-icon> 常见问题</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-nanyang-gold transition flex items-center gap-2"><iconify-icon icon="mdi:chevron-right" class="text-nanyang-gold"></iconify-icon> 退换货政策</a></li>
+                    </ul>
+                </div>
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-nanyang-light font-bold text-xl mb-6 font-serif border-b border-nanyang-gold/20 pb-2 inline-block">联络我们</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <iconify-icon icon="mdi:map-marker" class="text-nanyang-gold text-2xl mt-0.5 flex-shrink-0"></iconify-icon>
+                            <span class="text-gray-400 text-sm leading-relaxed">No 88, Lorong Kilang,<br>Kawasan Perusahaan Mak Mandin,<br>13400 Butterworth, Penang</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <iconify-icon icon="mdi:phone" class="text-nanyang-gold text-xl flex-shrink-0"></iconify-icon>
+                            <span class="text-gray-400 text-base">+60 12-345 6789 <span class="text-xs text-gray-500">(Mon-Sat, 9am-6pm)</span></span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <iconify-icon icon="mdi:email" class="text-nanyang-gold text-xl flex-shrink-0"></iconify-icon>
+                            <span class="text-gray-400 text-base">hello@uncleming.com.my</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">
+                    &copy; 2026 亚明叔手工虾饼 (Uncle Ming's Enterprise - NS1234567-X). All rights reserved.
+                </p>
+                <div class="flex items-center gap-2 text-gray-500 text-sm">
+                    Made with <iconify-icon icon="mdi:heart" class="text-nanyang-red animate-pulse text-lg"></iconify-icon> in Malaysia
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
